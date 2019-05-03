@@ -36,7 +36,4 @@ const styles = StyleSheet.create({
     home:{
         flex: 1,
     },
-    button: {
-
-    }
 });
