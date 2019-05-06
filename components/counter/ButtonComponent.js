@@ -15,11 +15,11 @@ class ButtonComponent extends Component {
                 color="coral" 
                 accessibilityLabel="Increase Counter" 
                 style={styles.btnInc}
-                onPress= {() => {}}
+                onPress= {() => {this.props.onIncrease(3)}}
                 />
 
                 <Button title="Decrease" color="crimson"  accessibilityLabel="Decrease Counter" style={styles.btnDec}
-                onPress= {() => {this.props.on}}
+                onPress= {() => {this.props.onDecrease(1)}}
                 />
             </View>
         );

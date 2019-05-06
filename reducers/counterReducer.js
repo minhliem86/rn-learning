@@ -1,20 +1,14 @@
 import {INCREAMENT, DECREAMENT} from '../actions/defineType';
 
-export default counterReducer = (state = {step: 1}, action) => {
+export default counterReducer = (count = 0, action) => {
     switch (action.type) {
         case INCREAMENT:
-        return  {
-            ...state,
-            step: step+action.step
-        }
+        return  count + action.step;
 
         case DECREAMENT:
-        return  {
-            ...state,
-            step: step-action.step
-        }
+        return  count - action.step;
             
         default:
-            return state;
+            return count;
     }
 };

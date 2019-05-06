@@ -9,7 +9,7 @@ class DisplayComponent extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Count: 1</Text>
+                <Text>Count: {this.props.count}</Text>
             </View>
         );
     }

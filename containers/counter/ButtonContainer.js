@@ -5,7 +5,7 @@ import {increase, descrease} from '../../actions';
 
 const mapStateToProps = state => {
     return {
-
+        
     }
 }
 

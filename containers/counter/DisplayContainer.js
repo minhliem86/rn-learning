@@ -3,7 +3,7 @@ import DisplayComponent from '../../components/counter/DisplayComponent';
 
 const mapStateToProps = state => {
     return {
-        
+        count: state.counterReducer ? state.counterReducer : 0
     }
 }
 
