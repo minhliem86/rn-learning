@@ -9,6 +9,7 @@ import SettingComponent from './components/draws/SettingComponent';
 import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import allReducers from './reducers';
+import { composeWithDevTools } from "redux-devtools-extension";
 
 /* REDUX SAGA */
 import createSagaMiddleware from 'redux-saga';
@@ -20,6 +21,7 @@ const sagaMiddleware = createSagaMiddleware();
 /* REDUX COMPONENT */
 // import TaskComponent from './components/tasks/TaskComponent';
 import CounterComponent from './components/counter/CounterComponent';
+import SagaContainer from './containers/SagaContainer';
 
 
 let drawerNavigationOptions = {
@@ -35,13 +37,13 @@ const MyNavigation = createDrawerNavigator({
     Setting: {
       screen : SettingComponent
     }
-  }, 
+  },
   drawerNavigationOptions
 )
 const MyAppContainer = createAppContainer(MyNavigation);
 
 // REDUX STORE
-let store = createStore(allReducers, applyMiddleware(sagaMiddleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+let store = createStore(allReducers, composeWithDevTools ( applyMiddleware(sagaMiddleware)) );
 
 class App extends Component {
   render() {
@@ -49,7 +51,7 @@ class App extends Component {
       <Provider store = {store}>
         <View style={styles.container}>
           <View style={styles.barStatus}></View>
-          <CounterComponent/>
+          <SagaContainer/>
         </View>
       </Provider>
     );
