@@ -1,14 +1,14 @@
 import {delay} from 'redux-saga';
-import {call, all} from 'redux-saga/effects';
+import {call, all, fork} from 'redux-saga/effects';
 
 import {sayHello, watchDescrease, watchIncrease} from './counterSaga';
-import {watchFetchData} from './dataSaga';
+import {watchFetchData, watchAddData} from './dataSaga';
 
 export default function* rootSaga() {
-    yield call(watchFetchData);
-    // yield all([
-    //     sayHello,
-    //     watchDescrease(),
-    //     watchIncrease(),
-    // ])
+    yield all([
+        fork(watchFetchData),
+        fork(watchAddData),
+    ])
+
+
 }

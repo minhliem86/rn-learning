@@ -7,12 +7,15 @@ import {
   Button,
   TextInput
 } from 'react-native';
+import FlatlistItem from './FlatlistItem';
+import EditModal from './ModalEdit';
 
 export default class DataComponent extends Component {
 
   constructor(props) {
     super(props);
   }
+
 
   render() {
     return (
@@ -23,17 +26,14 @@ export default class DataComponent extends Component {
           style={styles.root}
           data = {this.props.data}
           keyExtractor={(item, index)=>{ return index.toString()}}
-          renderItem={({item, index}) =>
-
+          renderItem={({item, index}) =>{
               <View style={styles.container}>
-                <View style={styles.content}>
-                  <View style={styles.contentHeader}>
-                    <Text  style={styles.name}>{item.title}</Text>
-                  </View>
-                  <Text rkType='primary3 mediumLine'>{item.body}</Text>
-                </View>
+                  <FlatlistItem {...item} itemIndex={index} parentsComponent={this} />
               </View>
+            }
           }/>
+          <EditModal ref={"editModal"} parentsComponent = {this} />
+
       </View>
     );
   }
@@ -43,8 +43,8 @@ class ActionComponent extends Component{
   constructor (props){
     super(props);
     this.state = {
-      title: '',
-      description: ''
+      name: '',
+      job: ''
     }
   }
   render(){
@@ -55,14 +55,14 @@ class ActionComponent extends Component{
           <TextInput
             style= {styles.inputText}
             placeholder = "Enter Title"
-            name="title"
-            onChangeText = {(text) => {this.setState({title: text})} }
+            name="name"
+            onChangeText = {(text) => {this.setState({name: text})} }
           />
           <TextInput
             style= {styles.inputText}
             placeholder = "Enter Description"
-            name="description"
-            onChangeText = {(desc) => {this.setState({description: desc})} }
+            name="job"
+            onChangeText = {(desc) => {this.setState({job: desc})} }
           />
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -71,14 +71,14 @@ class ActionComponent extends Component{
             title="Add New"
             color="orangered"
             onPress= { ()=>{
-              const {title, description} = this.state;
-              if( !title.length  || !description.length ){
-                alert('Vui lòng nhập title, description');
+              const {name, job} = this.state;
+              if( !name.length  || !job.length ){
+                alert('Vui lòng nhập name, job');
                 return;
               }
-              this.props.onAdd({title: title, description: description});
+              this.props.onAdd({name: name, job: job});
 
-             }} ></Button>
+            }} ></Button>
           <Button
             style = {styles.btnFetch}
             title="Fetch Data"
@@ -92,7 +92,7 @@ class ActionComponent extends Component{
 
 const styles = StyleSheet.create({
   root: {
-    backgroundColor: "#ffffff",
+    backgroundColor: 'lightyellow',
     marginTop:10,
   },
   container: {
@@ -140,32 +140,5 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     height:35,
     justifyContent: 'center',
-  },
-  content: {
-    marginLeft: 16,
-    flex: 1,
-  },
-  contentHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 6
-  },
-  separator: {
-    height: 1,
-    backgroundColor: "#CCCCCC"
-  },
-  image:{
-    width:45,
-    height:45,
-    borderRadius:20,
-    marginLeft:20
-  },
-  time:{
-    fontSize:11,
-    color:"#808080",
-  },
-  name:{
-    fontSize:16,
-    fontWeight:"bold",
   },
 });

@@ -1,4 +1,4 @@
-import {ADD_NEW_TASK, TOOGLE_TASK, INCREAMENT, DECREAMENT, ADD_SAGA_LIST, FETCH_DATA_LIST, FETCH_SUCCESS, FETCH_FAIL} from './defineType'
+import {ADD_NEW_TASK, TOOGLE_TASK, INCREAMENT, DECREAMENT, ADD_SAGA_LIST, FETCH_DATA_LIST, FETCH_SUCCESS, FETCH_FAIL, UPDATE_DATA, UPDATE_SUCCESS} from './defineType'
 
 let taskId = 0;
 
@@ -31,17 +31,16 @@ export const descrease = (step) => {
     }
 }
 
-export const fetch_data = (sort) => {
+export const fetch_data = () => {
     return {
-        type: FETCH_DATA_LIST,
-        sort
+        type: FETCH_DATA_LIST
     }
 }
 
-export const add_saga_data = (newMovie) => {
+export const add_saga_data = (newData = {}) => {
     return {
         type: ADD_SAGA_LIST,
-        newMovie
+        newData: newData
     }
 }
 
@@ -57,5 +56,20 @@ export const fetchFail = (error) => {
     return {
         type: FETCH_FAIL,
         error
+    }
+}
+
+// UPDATE SAGA
+export const updateData = (dataUpdate) => {
+    return {
+        type: UPDATE_DATA,
+        dataUpdate
+    }
+}
+/* CALL BY SAGA */
+export const updateDataSuccess = (dataUpdate) => {
+    return {
+        type: UPDATE_SUCCESS,
+        dataUpdate
     }
 }
