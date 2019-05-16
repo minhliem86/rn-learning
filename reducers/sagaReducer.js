@@ -1,4 +1,4 @@
-import {FETCH_SUCCESS, FETCH_FAIL, ADD_SAGA_LIST, UPDATE_SUCCESS} from '../actions/defineType';
+import {FETCH_SUCCESS, FETCH_FAIL, UPDATE_SUCCESS,} from '../actions/defineType';
 
 export default sagaReducer = (datas = [], action) => {
     switch (action.type) {
@@ -14,11 +14,14 @@ export default sagaReducer = (datas = [], action) => {
             return item.id.toString() === action.dataUpdate.id  ?
                 {
                     ...item,
-                    name: action.dataUpdate.name,
-                    job: action.dataUpdate.name,
+                    type: action.dataUpdate.type,
+                    number: action.dataUpdate.number,
+                    min: action.dataUpdate.min,
+                    max: action.dataUpdate.max,
+                    price: action.dataUpdate.price,
                 }
             : item
-        })
+        });
 
         default:
             return datas;

@@ -1,4 +1,17 @@
-import {ADD_NEW_TASK, TOOGLE_TASK, INCREAMENT, DECREAMENT, ADD_SAGA_LIST, FETCH_DATA_LIST, FETCH_SUCCESS, FETCH_FAIL, UPDATE_DATA, UPDATE_SUCCESS} from './defineType'
+import {
+    ADD_NEW_TASK,
+    TOOGLE_TASK,
+    INCREAMENT,
+    DECREAMENT,
+    ADD_SAGA_LIST,
+    FETCH_DATA_LIST,
+    FETCH_SUCCESS,
+    FETCH_FAIL,
+    UPDATE_DATA,
+    UPDATE_SUCCESS,
+    DELETE_DATA,
+    DELETE_SUCESS
+} from './defineType'
 
 let taskId = 0;
 
@@ -37,13 +50,6 @@ export const fetch_data = () => {
     }
 }
 
-export const add_saga_data = (newData = {}) => {
-    return {
-        type: ADD_SAGA_LIST,
-        newData: newData
-    }
-}
-
 /* ACTION SEND BY REDUX SAGA */
 export const fetchSucces = (listData) => {
     return {
@@ -51,6 +57,15 @@ export const fetchSucces = (listData) => {
         listData
     }
 }
+
+export const add_saga_data = (newData = {}) => {
+    return {
+        type: ADD_SAGA_LIST,
+        newData: newData
+    }
+}
+
+
 
 export const fetchFail = (error) => {
     return {
@@ -60,16 +75,28 @@ export const fetchFail = (error) => {
 }
 
 // UPDATE SAGA
-export const updateData = (dataUpdate) => {
+export const updateData = (dataUpdate = {}) => {
     return {
         type: UPDATE_DATA,
         dataUpdate
     }
 }
-/* CALL BY SAGA */
-export const updateDataSuccess = (dataUpdate) => {
+export const updateDataSuccess = (dataUpdateSuccess) => {
     return {
         type: UPDATE_SUCCESS,
-        dataUpdate
+        dataUpdateSuccess
     }
 }
+
+/* DELETE DATA */
+export const deleteData = (id) => {
+    return {
+        type: DELETE_DATA,
+        id
+    }
+}
+// export const delete_succes = () => {
+//     return {
+//         type: DELETE_SUCESS
+//     }
+// }

@@ -3,9 +3,12 @@ import {
     View,
     Text,
     StyleSheet,
-    Modal
+    Modal,
+    Image,
+    Alert
 } from "react-native";
 import Swipeout from 'react-native-swipeout';
+
 
 class FlatlistItem extends Component {
     constructor(props){
@@ -13,36 +16,54 @@ class FlatlistItem extends Component {
 
     }
     render() {
+        const {parentsComponent} = this.props;
         const settingSwipeout = {
             autoClose: true,
+            onOpen: ()=> {},
             right: [
                 {
                     onPress: ()=> {
-                        const {parentComponent} = this.props;
 
                     },
                     text: 'Edit', type: 'primary'
                 },
                 {
                     onPress: () => {
+                        Alert.alert(
+                            'Delete Item ?',
+                            'Are you want to delete item?',
+                            [
+                                {
+                                    text: 'OK', onPress: () =>  {
+                                        parentsComponent.props.onClickDelete(this.props.id);
+                                    }
+                                },
+                                {
+                                  text: 'Cancel',
+                                  style: 'cancel',
+                                },
 
+                            ],
+                            {cancelable: false},
+                        );
                     },
-                    text: 'Delete', type: 'danger'
+                    text: 'Delete', type: 'delete'
                 }
             ],
             sectionId: 1,
-            rowId: this.props.id
+            rowId: this.props.itemIndex
         }
         return (
             <Swipeout {...settingSwipeout}>
                 <View style={styles.content}>
                     <View style={styles.contentHeader}>
-                        <View style = {styles.colorGroup}>
-                            <View style= {{flex:1, witdh: 10, height: 10, backgroundColor: 'red' }}>
-                            </View>
-                            <Text  style={{...styles.name, color: `${item.color}`}}>{item.name}</Text>
+                        <Image style = {styles.image} source={{uri : 'https://www.akc.org/wp-content/themes/akc/component-library/assets/img/welcome.jpg'}} />
+                        <View style = {styles.contentWrapper}>
+                            <Text style = {styles.title}>Type: <Text style={styles.name}>{this.props.type}</Text> </Text>
+                            <Text style = {styles.title}>Number: <Text style={styles.name}>{ this.props.number }</Text> </Text>
+                            <Text style = {styles.title}>Wifi: <Text style={styles.name}>{ this.props.hasWifi }</Text> </Text>
+                            <Text style = {styles.title}>Price: <Text style={styles.name}>{ this.props.price }</Text> </Text>
                         </View>
-                        <Text  style={styles.time}>{item.year}</Text>
                     </View>
                     <View style = {styles.separator}></View>
                 </View>
@@ -60,7 +81,8 @@ const styles = StyleSheet.create({
       contentHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 6
+        marginBottom: 6,
+        padding:10,
       },
       separator: {
         height: 2,
@@ -69,11 +91,10 @@ const styles = StyleSheet.create({
       image:{
         width:45,
         height:45,
-        borderRadius:20,
-        marginLeft:20
+        marginRight: 25
       },
-      colorGroup: {
-        flexDirection: 'row'
+      contentWrapper: {
+        flex:1
       },
       time:{
         fontSize:11,
@@ -83,5 +104,10 @@ const styles = StyleSheet.create({
         fontSize:16,
         fontWeight:"bold",
       },
+      title: {
+          fontWeight: 'bold',
+          fontSize:12,
+          color: '#666'
+      }
 
 });

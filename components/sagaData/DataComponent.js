@@ -9,6 +9,9 @@ import {
 } from 'react-native';
 import FlatlistItem from './FlatlistItem';
 import EditModal from './ModalEdit';
+import RNPickerSelect from 'react-native-picker-select';
+
+const rangValue = [1,2,3,4,5,6,7,8];
 
 export default class DataComponent extends Component {
 
@@ -27,12 +30,13 @@ export default class DataComponent extends Component {
           data = {this.props.data}
           keyExtractor={(item, index)=>{ return index.toString()}}
           renderItem={({item, index}) =>{
-              <View style={styles.container}>
+            return (
+
                   <FlatlistItem {...item} itemIndex={index} parentsComponent={this} />
-              </View>
-            }
+
+            )}
           }/>
-          <EditModal ref={"editModal"} parentsComponent = {this} />
+          {/* <EditModal ref={"editModal"} parentsComponent = {this} /> */}
 
       </View>
     );
@@ -43,8 +47,12 @@ class ActionComponent extends Component{
   constructor (props){
     super(props);
     this.state = {
-      name: '',
-      job: ''
+      number: '',
+      type: '',
+      min: 1,
+      max: 8,
+      hasWifi: 0,
+      price: '',
     }
   }
   render(){
@@ -54,29 +62,138 @@ class ActionComponent extends Component{
         <View style={styles.formWrapper} >
           <TextInput
             style= {styles.inputText}
-            placeholder = "Enter Title"
-            name="name"
-            onChangeText = {(text) => {this.setState({name: text})} }
+            placeholder = "Enter Room Type"
+            onChangeText = {(text) => {this.setState({type: text})} }
+
           />
           <TextInput
             style= {styles.inputText}
-            placeholder = "Enter Description"
-            name="job"
-            onChangeText = {(desc) => {this.setState({job: desc})} }
+            placeholder = "Enter Num of room"
+            onChangeText = {(text) => {this.setState({number: text})} }
+            keyboardType = "numeric"
+
           />
         </View>
+        <View style = {styles.formWrapper}>
+          <TextInput
+              style= {styles.inputText}
+              placeholder = "Enter Price per night"
+              onChangeText = {(text) => {this.setState({price: text})} }
+              keyboardType = "numeric"
+          />
+
+          <RNPickerSelect
+            placeholder = {{
+              label: 'Do has Wifi ?',
+              value: null,
+              color: '#9EA0A4',
+            }}
+            useNativeAndroidPickerStyle = {false}
+            style = {
+              {
+                inputAndroidContainer: {
+                  height:35,
+                  borderRadius: 3,
+                  borderWidth: 1,
+                  borderColor: 'seashell',
+                  padding:5,
+                  color: 'white',
+                  marginBottom: 10,
+                }
+              }
+            }
+            onValueChange = { (value, index) => {this.setState({hasWifi: value})}}
+            items = {
+              [
+                {
+                  label: 'Yes',
+                  value: 1
+                },
+                {
+                  label: 'No',
+                  value: 0
+                },
+              ]
+            }
+          />
+
+        </View>
+
+        <RNPickerSelect
+          placeholder = {{
+            label: 'Select a min of quatity person...',
+            value: null,
+            color: '#9EA0A4',
+          }}
+          useNativeAndroidPickerStyle = {false}
+          style = {
+            {
+              inputAndroidContainer: {
+                height:35,
+                borderRadius: 3,
+                borderWidth: 1,
+                borderColor: 'seashell',
+                padding:5,
+                color: 'white',
+                marginBottom: 10
+              }
+            }
+          }
+          onValueChange = { (value, index) => {this.setState({min: value})}}
+          items ={
+            rangValue.map( value => {
+              return {label: value.toString(), value: value}
+            })
+          }
+        />
+        <RNPickerSelect
+          placeholder = {{
+            label: 'Select a max of quatity person...',
+            value: null,
+            color: '#9EA0A4',
+          }}
+          useNativeAndroidPickerStyle = {false}
+          style = {
+            {
+              inputAndroidContainer: {
+                height:35,
+                borderRadius: 3,
+                borderWidth: 1,
+                borderColor: 'seashell',
+                padding:5,
+                color: 'white',
+                marginBottom: 10
+              }
+            }
+          }
+          onValueChange = { (value, index) => {this.setState({max: value})}}
+          items ={
+            rangValue.map( value => {
+              return {label: value.toString(), value: value}
+            })
+          }
+        />
+
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Button
             style = {styles.btnAdd}
             title="Add New"
             color="orangered"
             onPress= { ()=>{
-              const {name, job} = this.state;
-              if( !name.length  || !job.length ){
-                alert('Vui lòng nhập name, job');
+              const {number, type, hasWifi, min, max, price} = this.state;
+              console.log(this.state.hasWifi);
+              if( !number  || !type.length  || !min || !max ){
+                alert('Vui lòng nhập đầy đủ thông tin !');
                 return;
               }
-              this.props.onAdd({name: name, job: job});
+              this.props.onAdd({
+                number,
+                type,
+                min,
+                max,
+                hasWifi,
+                price,
+              });
 
             }} ></Button>
           <Button
@@ -93,7 +210,6 @@ class ActionComponent extends Component{
 const styles = StyleSheet.create({
   root: {
     backgroundColor: 'lightyellow',
-    marginTop:10,
   },
   container: {
     paddingLeft: 19,
@@ -141,4 +257,13 @@ const styles = StyleSheet.create({
     height:35,
     justifyContent: 'center',
   },
+  inputAndroidContainer: {
+    height:35,
+    borderRadius: 3,
+    borderWidth: 1,
+    borderColor: 'seashell',
+    padding:5,
+    color: 'white',
+    marginBottom: 10
+  }
 });
