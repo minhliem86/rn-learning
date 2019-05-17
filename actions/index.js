@@ -10,7 +10,7 @@ import {
     UPDATE_DATA,
     UPDATE_SUCCESS,
     DELETE_DATA,
-    DELETE_SUCESS
+    DELETE_SUCCESS
 } from './defineType'
 
 let taskId = 0;
@@ -75,18 +75,19 @@ export const fetchFail = (error) => {
 }
 
 // UPDATE SAGA
-export const updateData = (dataUpdate = {}) => {
+export const updateData = (dataUpdate = {}, id) => {
     return {
         type: UPDATE_DATA,
-        dataUpdate
+        dataUpdate,
+        id
     }
 }
-export const updateDataSuccess = (dataUpdateSuccess) => {
-    return {
-        type: UPDATE_SUCCESS,
-        dataUpdateSuccess
-    }
-}
+// export const updateDataSuccess = (dataUpdateSuccess) => {
+//     return {
+//         type: UPDATE_SUCCESS,
+//         dataUpdateSuccess
+//     }
+// }
 
 /* DELETE DATA */
 export const deleteData = (id) => {
@@ -95,8 +96,3 @@ export const deleteData = (id) => {
         id
     }
 }
-// export const delete_succes = () => {
-//     return {
-//         type: DELETE_SUCESS
-//     }
-// }

@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 
 const mapStateToProps = state => {
     return {
-        data: state.sagaReducer.data,
+        data: state.sagaReducer,
     }
 }
 
@@ -25,7 +25,6 @@ const mapDispatchToProps = (dispatch) => {
         onClickUpdate: (data) => {
             dispatch(updateData(data));
         }
-
     }
 }
 

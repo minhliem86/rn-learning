@@ -10,7 +10,7 @@ function* getDataApi() {
         body: ''
     })
     const data = yield response.status === 200 ? JSON.parse(response._bodyInit)  : [];
-    return data;
+    return data.data;
 }
 
 function* postAddDataApi(newData = {}){
@@ -34,7 +34,6 @@ function* postAddDataApi(newData = {}){
 }
 
 function* postDeleteDataApi(id){
-    console.log(urlAPI + '/rooms' + `/${id}`);
     const response = yield fetch(urlAPI + '/rooms' + `/${id}`, {
         method: 'DELETE',
         headers: {
@@ -43,7 +42,7 @@ function* postDeleteDataApi(id){
         },
         body: ''
     });
-    return yield(response.status === 204 );
+    return yield (response.status === 204);
 }
 
 function* postUpdateDataApi(editData, id){
@@ -55,7 +54,8 @@ function* postUpdateDataApi(editData, id){
         },
         body: JSON.stringify(editData)
     });
-    return data = yield response.status === 200 ? JSON.stringify(response._bodyInit) : '';
+    console.log(response);
+    // return data = yield response.status === 200 ? JSON.stringify(response._bodyInit) : '';
 }
 
 export const Api = {

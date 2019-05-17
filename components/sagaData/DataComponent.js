@@ -36,7 +36,7 @@ export default class DataComponent extends Component {
 
             )}
           }/>
-          {/* <EditModal ref={"editModal"} parentsComponent = {this} /> */}
+          <EditModal ref={"editModal"} parentsComponent = {this} />
 
       </View>
     );

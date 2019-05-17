@@ -22,11 +22,10 @@ class ModalEdit extends Component {
             max: 8,
             hasWifi: 0,
             price: '',
-
         }
     }
-    openModalVisible() {
-        this.setState({modalVisible: true})
+    __openModal() {
+        this.refs.myModal.open()
     }
 
     render() {

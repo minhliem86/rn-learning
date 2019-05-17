@@ -1,4 +1,5 @@
-import {FETCH_SUCCESS, FETCH_FAIL, UPDATE_SUCCESS,} from '../actions/defineType';
+import {FETCH_SUCCESS, FETCH_FAIL, UPDATE_SUCCESS, DELETE_SUCCESS} from '../actions/defineType';
+
 
 export default sagaReducer = (datas = [], action) => {
     switch (action.type) {
@@ -22,6 +23,10 @@ export default sagaReducer = (datas = [], action) => {
                 }
             : item
         });
+        case DELETE_SUCCESS:
+            return datas.filter( (item) => {
+                return item.id.toString() !== action.id.toString();
+            });
 
         default:
             return datas;

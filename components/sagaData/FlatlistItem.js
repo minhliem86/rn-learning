@@ -13,17 +13,15 @@ import Swipeout from 'react-native-swipeout';
 class FlatlistItem extends Component {
     constructor(props){
         super(props);
-
     }
     render() {
         const {parentsComponent} = this.props;
         const settingSwipeout = {
             autoClose: true,
-            onOpen: ()=> {},
             right: [
                 {
                     onPress: ()=> {
-
+                        parentsComponent.refs.editModal.__openModal();
                     },
                     text: 'Edit', type: 'primary'
                 },

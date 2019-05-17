@@ -4,6 +4,9 @@ import {
     FETCH_FAIL,
     ADD_SAGA_LIST,
     DELETE_DATA,
+    DELETE_SUCCESS,
+    UPDATE_DATA,
+    UPDATE_SUCCESS
 } from '../actions/defineType';
 import {Api} from './api';
 import {put, takeLatest} from 'redux-saga/effects';
@@ -47,12 +50,11 @@ export function* watchDeleteData(){
 
 function* deleteData(action){
     try{
-
-        const response = yield Api.postDeleteDataApi(action.id.toString());
-
-        yield put({type: FETCH_DATA_LIST});
-        alert('The Room is deleted');
-    }catch (err){
+        const result = yield Api.postDeleteDataApi(action.id);
+        if(result){
+            yield put({ type: DELETE_SUCCESS, id: action.id });
+        }
+    } catch (err){
 
     }
 }
@@ -62,4 +64,13 @@ export function* watchUpdateData(){
     yield takeLatest(UPDATE_DATA, updateData);
 }
 
-// function* updateData(dataUpdate, )
+function* updateData(action){
+    try{
+        const result = yield Api.postUpdateDataApi(action.dataUpdate, action.id);
+
+        yield put({type: UPDATE_SUCCESS, dataUpdate: result })
+
+    }catch(err){
+
+    }
+}
